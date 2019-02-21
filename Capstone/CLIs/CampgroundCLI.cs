@@ -1,17 +1,34 @@
 ﻿using Capstone.DAL;
+using Capstone.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Capstone.CLIs
 {
     public class CampgroundCLI : CLI
     {
-        private CampgroundDAO campgroundDAO;
+        //private int selectedPark;
 
-        public override void Run(int selection)
+        private ICampgroundDAO campgroundDAO;
+        private readonly int parkId;
+
+        public CampgroundCLI(ICampgroundDAO campgroundDAO, int parkId)
         {
-            throw new NotImplementedException();
+            this.campgroundDAO = campgroundDAO;
+            this.parkId = parkId;
         }
+
+        public override void Run()
+        {
+            //if (!IsVaildCamp(selectedCamp))
+            //{
+            //    throw new Exception();
+            //}
+
+        }
+
+
     }
 }

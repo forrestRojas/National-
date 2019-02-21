@@ -11,8 +11,15 @@ namespace Capstone.DAL
     /// </summary>
     class ParkDAO : IParkDAO
     {
-        private string connectionString;
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string connectionString;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connectionString"></param>
         public ParkDAO(string connectionString)
         {
             this.connectionString = connectionString;
@@ -53,6 +60,11 @@ namespace Capstone.DAL
             return parks;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         private Park ConvertReaderToPark(SqlDataReader reader)
         {
             Park park = new Park();

@@ -13,9 +13,17 @@ namespace Capstone.CLIs
     public class MainMenuCLI : CLI
     {
         const int padLength = 3;
+        const int returnToInputLine = 2;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private IParkDAO parkDAO;
 
+        /// <summary>
+        /// Creates a MainmenuCLI
+        /// </summary>
+        /// <param name="parkDAO"></param>
         public MainMenuCLI(IParkDAO parkDAO)
         {
             this.parkDAO = parkDAO;
@@ -26,31 +34,33 @@ namespace Capstone.CLIs
         /// </summary>
         public override void Run()
         {
-            string error = "";
             IList<Park> parks = parkDAO.GetParks();
+            MainMenuHeader(parks);
+
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine(error);
-                error = "";
-                Console.WriteLine("Select a Park for Further Details");
-
-
-                int count = 1;
-                foreach (Park park in parks)
-                {
-                    Console.WriteLine($"{count}) {park.Name}".PadRight(padLength));
-                    count++;
-                }
-
-                Console.WriteLine("Q) Quit".PadRight(padLength));
-
                 string input = GetString("Make selection here: ");
+                bool isValidPark = false;
+
 
                 if (int.TryParse(input, out int choice))
                 {
-                    CampgroundCLI campground = new CampgroundCLI();
-                    campground.Run(choice);
+                    choice--;
+
+                    isValidPark = IsVaildPark(choice, parks);
+
+                    if (isValidPark)
+                    {
+                        ParkCLI parkMenu = new ParkCLI(parks[choice]);
+                        parkMenu.Run();
+                        MainMenuHeader(parks);
+                    }
+                    else
+                    {
+                        // TODO write code for failed vaildation
+                        Console.WriteLine($"{input} is Not a vaild park, please try again");
+                        Console.CursorTop -= returnToInputLine;
+                    }
                 }
                 else if (input.ToLower() == "q")
                 {
@@ -58,9 +68,41 @@ namespace Capstone.CLIs
                 }
                 else
                 {
-                    error = "Please select a correct input.";
+                    Console.WriteLine("Please select a correct input.");
+                    Console.CursorTop -= returnToInputLine;
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates the header for the menu
+        /// </summary>
+        /// <param name="parks"></param>
+        private static void MainMenuHeader(IList<Park> parks)
+        {
+            Console.Clear();
+            Console.WriteLine("Select a Park for Further Details");
+
+            int count = 1;
+            foreach (Park park in parks)
+            {
+                Console.WriteLine($"{count}) {park.Name}".PadRight(padLength));
+                count++;
+            }
+            Console.WriteLine("Q) Quit".PadRight(padLength));
+        }
+
+        /// <summary>
+        /// Check if park is valid
+        /// </summary>
+        /// <param name="parkChoice"></param>
+        /// <param name="parks"></param>
+        /// <returns></returns>
+        private bool IsVaildPark(int parkChoice, IList<Park> parks)
+        {
+            bool isValid = false;
+            isValid = (parkChoice < parks.Count() && parkChoice >= 0) && (parks[parkChoice] != null);
+            return isValid;
         }
     }
 }
