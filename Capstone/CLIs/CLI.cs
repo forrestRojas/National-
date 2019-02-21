@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone.DAL;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -201,7 +202,7 @@ namespace Capstone.CLIs
         /// <summary>
         /// An abstract method that runs a menu.
         /// </summary>
-        public abstract void Run();
+        public abstract void Run(int selection);
     }
 }
 
