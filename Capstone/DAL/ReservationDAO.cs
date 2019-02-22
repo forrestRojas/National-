@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Capstone.DAL
 {
-    class ReservationDAO
+    public class ReservationDAO : IReservationDAO
     {
+        public ReservationDAO(string connectionString)
+        {
+        }
     }
 }

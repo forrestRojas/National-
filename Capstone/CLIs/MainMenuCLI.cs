@@ -19,14 +19,21 @@ namespace Capstone.CLIs
         /// 
         /// </summary>
         private IParkDAO parkDAO;
+        private ICampgroundDAO campgroundDAO;
+        private ISiteDAO siteDAO;
+        private IReservationDAO reservationDAO;
+
 
         /// <summary>
         /// Creates a MainmenuCLI
         /// </summary>
         /// <param name="parkDAO"></param>
-        public MainMenuCLI(IParkDAO parkDAO)
+        public MainMenuCLI(IParkDAO parkDAO, ICampgroundDAO campgroundDAO, ISiteDAO siteDAO, IReservationDAO reservationDAO)
         {
             this.parkDAO = parkDAO;
+            this.campgroundDAO = campgroundDAO;
+            this.siteDAO = siteDAO;
+            this.reservationDAO = reservationDAO;
         }
         
         /// <summary>
@@ -51,7 +58,7 @@ namespace Capstone.CLIs
 
                     if (isValidPark)
                     {
-                        ParkCLI parkMenu = new ParkCLI(parks[choice]);
+                        ParkCLI parkMenu = new ParkCLI(parks[choice], campgroundDAO, siteDAO, reservationDAO);
                         parkMenu.Run();
                         MainMenuHeader(parks);
                     }

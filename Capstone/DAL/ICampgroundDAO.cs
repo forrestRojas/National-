@@ -11,6 +11,6 @@ namespace Capstone.DAL
         /// Gets all campgrounds from a specified park.
         /// </summary>
         /// <returns></returns>
-        List<Campground> GetCampgrounds();
+        List<Campground> GetCampgrounds(int id);
     }
 }

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Capstone.DAL
 {
-    class SiteDAO
+    public class SiteDAO : ISiteDAO
     {
+        public SiteDAO(string connectionString)
+        {
+        }
     }
 }

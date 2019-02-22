@@ -13,12 +13,17 @@ namespace Capstone.CLIs
         const int returnToInputLine = 2;
 
         private readonly Park park;
+        private ICampgroundDAO campgroundDAO;
+        private ISiteDAO siteDAO;
+        private IReservationDAO reservationDAO;
 
-
-        public ParkCLI(Park selectedPark)
+        public ParkCLI(Park selectedPark, ICampgroundDAO campgroundDAO, ISiteDAO siteDAO, IReservationDAO reservationDAO)
         {
             
             this.park = selectedPark;
+            this.campgroundDAO = campgroundDAO;
+            this.siteDAO = siteDAO;
+            this.reservationDAO = reservationDAO;
         }
 
         public override void Run()
@@ -38,7 +43,7 @@ namespace Capstone.CLIs
 
                 if (choice == 1)
                 {
-                    CampgroundCLI campgroundCLI = new CampgroundCLI(this.park.Id);
+                    CampgroundCLI campgroundCLI = new CampgroundCLI(park, campgroundDAO, siteDAO, reservationDAO);
                     campgroundCLI.Run();
                     ParkMenuHeader(padInfo, padOptions);
                 }
