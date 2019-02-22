@@ -28,6 +28,7 @@ namespace Capstone.CLIs
         {
             IList<Campground> campgrounds = campgroundDAO.GetCampgrounds(park.Id);
             CampgroundMenuHeader(campgrounds);
+            Console.Read();
         }
 
         private void CampgroundMenuHeader(IList<Campground> campgrounds)
@@ -35,13 +36,18 @@ namespace Capstone.CLIs
             Console.Clear();
             Console.WriteLine($"{park.Name} National Park Campgrounds");
             Console.WriteLine();
-            Console.WriteLine("" + "Name" + "Open" + "Close" + "Daily Fee");
+            Console.WriteLine("".PadRight(3) + "Name".PadRight(21) + "Open".PadRight(16) + "Close".PadRight(16) + "Daily Fee");
 
             int count = 1;
             foreach (Campground campground in campgrounds)
             {
-                Console.WriteLine($"{count}) {campground.Name}");
+                Console.WriteLine($"#{count} {campground.Name.PadRight(20)} {ReturnMonth(campground.OpenFrom).PadRight(15)} {ReturnMonth(campground.OpenTo).PadRight(15)} {campground.DailyFee:C2}");
+                count++;
             }
+            Console.WriteLine("");
+            Console.WriteLine("Select a command");
+            Console.WriteLine("1) Search for Available Reservation".PadLeft(3));
+            Console.WriteLine("2) Return to Previous Screen".PadLeft(3));
         }
     }
 }
