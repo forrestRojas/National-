@@ -15,7 +15,7 @@ namespace Capstone.DAL
             this.connectionString = connectionString;
         }
 
-        public List<Campground> GetCampgrounds(int id)
+        public IList<Campground> GetCampgrounds(int id)
         {
             List<Campground> campgrounds = new List<Campground>();
 
@@ -45,6 +45,11 @@ namespace Capstone.DAL
             }
 
             return campgrounds;
+        }
+
+        public decimal GetCampingCost(Campground campground, DateTime arrivalDate, DateTime departureDate)
+        {
+            throw new NotImplementedException();
         }
 
         private Campground ConvertReaderToCampground(SqlDataReader reader)

@@ -11,6 +11,15 @@ namespace Capstone.CLIs
     /// </summary>
     public abstract class CLI
     {
+        const int returnToInputLine = 2;
+
+        public void InvalidInput()
+        {
+            Console.WriteLine("Please select a correct input.");
+            Console.CursorTop -= returnToInputLine;
+        }
+
+
         /// <summary>
         /// This continually prompts the user until they enter a valid string (1 or more characters).
         /// </summary>
@@ -117,6 +126,29 @@ namespace Capstone.CLIs
 
             return boolValue;
         }
+
+        protected DateTime GetDate(string message)
+        {
+            string userInput = String.Empty;
+            int numberOfAttempts = 0;
+            DateTime output;
+
+            do
+            {
+                if (numberOfAttempts > 0)
+                {
+                    Console.WriteLine("Invalid input. Please try again.");
+                    Console.CursorTop -= 2;
+                }
+                Console.Write(message.Trim(' ') + ' ');
+                userInput = Console.ReadLine();
+                numberOfAttempts++;
+            }
+            while (!DateTime.TryParse(userInput, out output));
+
+            return output;
+        }
+
 
         /// <summary>
         /// Writes a line relative to the console cursor's current postion, then returns to the original line.

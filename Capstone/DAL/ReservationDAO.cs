@@ -9,5 +9,10 @@ namespace Capstone.DAL
         public ReservationDAO(string connectionString)
         {
         }
+
+        public void MakeResrevation(int siteNumber, string reservationName, DateTime arrivalDate, DateTime departureDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

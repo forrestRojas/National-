@@ -10,7 +10,6 @@ namespace Capstone.CLIs
     {
         const int padInfo = 20;
         const int padOptions = 3;
-        const int returnToInputLine = 2;
 
         private readonly Park park;
         private ICampgroundDAO campgroundDAO;
@@ -57,8 +56,7 @@ namespace Capstone.CLIs
                 }
                 else
                 {
-                    Console.WriteLine("Not a valid option, please try again.");
-                    Console.CursorTop -= returnToInputLine;
+                    InvalidInput();
                 }
             }
         }

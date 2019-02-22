@@ -11,6 +11,7 @@ namespace Capstone.DAL
         /// Gets all campgrounds from a specified park.
         /// </summary>
         /// <returns></returns>
-        List<Campground> GetCampgrounds(int id);
+        IList<Campground> GetCampgrounds(int id);
+        decimal GetCampingCost(Campground campground, DateTime arrivalDate, DateTime departureDate);
     }
 }

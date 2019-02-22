@@ -75,8 +75,7 @@ namespace Capstone.CLIs
                 }
                 else
                 {
-                    Console.WriteLine("Please select a correct input.");
-                    Console.CursorTop -= returnToInputLine;
+                    InvalidInput();
                 }
             }
         }
