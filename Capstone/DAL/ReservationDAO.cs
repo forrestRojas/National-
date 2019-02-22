@@ -11,8 +11,10 @@ namespace Capstone.DAL
     /// </summary>
     public class ReservationDAO : IReservationDAO
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string connectionString;
-
 
         /// <summary>
         /// 
@@ -23,6 +25,11 @@ namespace Capstone.DAL
             this.connectionString = connectionString;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="siteid"></param>
+        /// <returns></returns>
         public IList<Reservation> GetReservations(int siteid)
         {
             List<Reservation> res = new List<Reservation>();
@@ -33,7 +40,7 @@ namespace Capstone.DAL
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM reservation WHERE site_id = @siteid ORDER BY from_date");
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM reservation WHERE site_id = @siteid ORDER BY from_date", conn);
                     cmd.Parameters.AddWithValue("@siteid", siteid);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -55,6 +62,11 @@ namespace Capstone.DAL
             return res;
         }
 
+        /// <summary>
+        /// Creates a new reservation
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         private Reservation ConvertReaderToRes(SqlDataReader reader)
         {
             Reservation res = new Reservation();
@@ -65,26 +77,21 @@ namespace Capstone.DAL
             res.FromDate = Convert.ToDateTime(reader["from_date"]);
             res.ToDate = Convert.ToDateTime(reader["to_date"]);
             res.CreateDate = Convert.ToDateTime(reader["create_date"]);
+
+            return res;
         }
 
         /// <summary>
-        /// 
+        ///  Books a reservation
         /// </summary>
         /// <param name="siteNumber"></param>
         /// <param name="reservationName"></param>
         /// <param name="arrivalDate"></param>
         /// <param name="departureDate"></param>
-        public int MakeResrevation(int siteId, string reservationName, DateTime arrivalDate, DateTime departureDate)
+        public int BookResrevation(Reservation newReservation)
         {
             try
             {
-                Reservation newReservation = new Reservation();
-                newReservation.SiteId = siteId;
-                newReservation.Name = reservationName;
-                newReservation.FromDate = arrivalDate;
-                newReservation.ToDate = departureDate;
-                newReservation.CreateDate = DateTime.Now;
-
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();

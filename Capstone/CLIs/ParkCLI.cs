@@ -12,10 +12,17 @@ namespace Capstone.CLIs
         const int padOptions = 3;
 
         private readonly Park park;
-        private ICampgroundDAO campgroundDAO;
-        private ISiteDAO siteDAO;
-        private IReservationDAO reservationDAO;
+        private readonly ICampgroundDAO campgroundDAO;
+        private readonly ISiteDAO siteDAO;
+        private readonly IReservationDAO reservationDAO;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="selectedPark"></param>
+        /// <param name="campgroundDAO"></param>
+        /// <param name="siteDAO"></param>
+        /// <param name="reservationDAO"></param>
         public ParkCLI(Park selectedPark, ICampgroundDAO campgroundDAO, ISiteDAO siteDAO, IReservationDAO reservationDAO)
         {
 
@@ -25,6 +32,9 @@ namespace Capstone.CLIs
             this.reservationDAO = reservationDAO;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Run()
         {
             bool isParkNull = this.park == null;

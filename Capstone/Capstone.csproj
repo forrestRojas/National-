@@ -9,7 +9,11 @@
     <PackageReference Include="microsoft.extensions.configuration" Version="2.2.0" />
     <PackageReference Include="microsoft.extensions.configuration.fileextensions" Version="2.2.0" />
     <PackageReference Include="microsoft.extensions.configuration.json" Version="2.2.0" />
-    <PackageReference Include="system.data.sqlclient" Version="4.5.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="system.data.sqlclient" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>

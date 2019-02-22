@@ -6,6 +6,9 @@ using Capstone.Models;
 
 namespace Capstone.DAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SiteDAO : ISiteDAO
     {
         // TODO add documention
@@ -36,12 +39,14 @@ namespace Capstone.DAL
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(this.connectionString))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM site WHERE campground_id = @campgroundid;", conn);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM site WHERE campground_id = @campgroundid AND site_id NOT IN (SELECT site_id FROM reservation WHERE (@departureDate > from_date AND @departureDate < to_date) OR (@arrivalDate > from_date AND @arrivalDate < to_date) OR (@arrivalDate < from_date AND @departureDate > to_date));", conn);
                     cmd.Parameters.AddWithValue("@campgroundid", campgroundId);
+                    cmd.Parameters.AddWithValue("@departureDate", departureDate);
+                    cmd.Parameters.AddWithValue("@arrivalDate", arrivalDate);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 

@@ -7,14 +7,17 @@ using System.Text;
 
 namespace Capstone.CLIs
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CampgroundCLI : CLI
     {
-        const int sitePad = 15;
+        private const int sitePad = 15;
 
         private ICampgroundDAO campgroundDAO;
         private ISiteDAO siteDAO;
         private IReservationDAO reservationDAO;
-        private readonly Park park;
+        private Park park;
 
         /// <summary>
         /// /
@@ -51,30 +54,38 @@ namespace Capstone.CLIs
                     int selectedCampground = GetInteger("Which campground (enter 0 to cancel)?", -1, campgrounds.Count);
                     if (selectedCampground == 0)
                     {
-                        break;                           
+                        break;
                     }
+
 
                     DateTime arrivalDate = GetDate("What is the arrival date (mm/dd/yyyy)?");
                     DateTime departureDate = GetDate("What is the departure date (mm/dd/yyyy)?");
                     Console.WriteLine();
 
+                    // List of all Avaiable sites
                     IList<Site> sites = siteDAO.GetSites(campgrounds[selectedCampground - 1].Id, arrivalDate, departureDate);
 
+                    // Displays site results
                     Console.WriteLine("Site No.".PadRight(sitePad) + "Max Occup.".PadRight(sitePad) + "Accessible?".PadRight(sitePad) + "Max RV Length".PadRight(sitePad) + "Utilty".PadRight(sitePad) + "Cost");
                     foreach (Site site in sites)
                     {
                         decimal cost = campgroundDAO.GetCampingCost(campgrounds[selectedCampground - 1].DailyFee, arrivalDate, departureDate);
-                        Console.WriteLine($"{site.SiteNumber, -sitePad}{site.MaxOccupancy, -sitePad}{site.Accessible, -sitePad}{site.MaxRVLength, -sitePad}{site.Utilities, -sitePad}{cost:C2}");
+                        Console.WriteLine($"{site.SiteNumber,-sitePad}{site.MaxOccupancy,-sitePad}{site.Accessible,-sitePad}{site.MaxRVLength,-sitePad}{site.Utilities,-sitePad}{cost:C2}");
                     }
 
+                    // Book reservation
                     Console.WriteLine();
                     int siteNumber = GetInteger("Which site should be reserved (enter 0 to cancel)?");
                     string reservationName = GetString("What name should the reservation be made under?");
-                    reservationDAO.GetReservations(sites[siteNumber - 1].SiteId);
-                    // TODO build reservationbooking
-                    int reservationId = reservationDAO.MakeResrevation(sites[siteNumber - 1 ].SiteId, reservationName, arrivalDate, departureDate);
 
-                    Console.WriteLine($"The reservation has been made and the confirmation id is {reservationId}");
+                    reservationDAO.GetReservations(sites[siteNumber - 1].SiteId);
+                    Reservation newReservation = CreateReservation(sites[siteNumber - 1].SiteId, arrivalDate, departureDate, reservationName);
+                    int reservationId = reservationDAO.BookResrevation(newReservation);
+
+                    Console.Write($"The reservation has been made and the confirmation id is {reservationId}");
+                    Console.ReadLine();
+                    CampgroundMenuHeader(campgrounds);
+                    DisplayCampgroundOptions();
                 }
                 else if (userInput == 2)
                 {
@@ -85,6 +96,24 @@ namespace Capstone.CLIs
                     InvalidInput();
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="siteId"></param>
+        /// <param name="arrivalDate"></param>
+        /// <param name="departureDate"></param>
+        /// <param name="reservationName"></param>
+        private static Reservation CreateReservation(int siteId, DateTime arrivalDate, DateTime departureDate, string reservationName)
+        {
+            Reservation newReservation = new Reservation();
+            newReservation.SiteId = siteId;
+            newReservation.Name = reservationName;
+            newReservation.FromDate = arrivalDate;
+            newReservation.ToDate = departureDate;
+            newReservation.CreateDate = DateTime.Now;
+            return newReservation;
         }
 
         /// <summary>

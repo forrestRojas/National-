@@ -1,13 +1,27 @@
-﻿using System;
+﻿using Capstone.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Capstone.DAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IReservationDAO
     {
-        int MakeResrevation(int siteNumber, string reservationName, DateTime arrivalDate, DateTime departureDate);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reservation"></param>
+        /// <returns></returns>
+        int BookResrevation(Reservation reservation);
 
-         IList<ReservationDAO> GetReservations(int siteid);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="siteid"></param>
+        /// <returns></returns>
+        IList<Reservation> GetReservations(int siteid);
     }
 }
