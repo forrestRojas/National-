@@ -6,15 +6,32 @@ using Capstone.Models;
 
 namespace Capstone.DAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class CampgroundDAO : ICampgroundDAO
     {
-        private string connectionString;
+        // TODO add documention
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string connectionString;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connectionString"></param>
         public CampgroundDAO(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IList<Campground> GetCampgrounds(int id)
         {
             List<Campground> campgrounds = new List<Campground>();
@@ -47,11 +64,23 @@ namespace Capstone.DAL
             return campgrounds;
         }
 
-        public decimal GetCampingCost(Campground campground, DateTime arrivalDate, DateTime departureDate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dailyFee"></param>
+        /// <param name="arrivalDate"></param>
+        /// <param name="departureDate"></param>
+        /// <returns></returns>
+        public decimal GetCampingCost(decimal dailyFee, DateTime arrivalDate, DateTime departureDate)
         {
-            throw new NotImplementedException();
+            return (decimal)(departureDate - arrivalDate).TotalDays * dailyFee;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         private Campground ConvertReaderToCampground(SqlDataReader reader)
         {
             Campground campground = new Campground();

@@ -74,6 +74,37 @@ namespace Capstone.CLIs
         }
 
         /// <summary>
+        /// This continually prompts the user until they enter a valid integer.
+        /// </summary>
+        /// <param name="message">A console message to prompt the user for an input.</param>
+        /// <param name="inRange"></param>
+        /// <returns>The console input as a integer.</returns>
+        protected int GetInteger(string message, int lowerLimt, int upperLimt)
+        {
+            string userInput = String.Empty;
+            int intValue = 0;
+            int numberOfAttempts = 0;
+            bool inRange = false;
+
+            do
+            {
+                if (numberOfAttempts > 0)
+                {
+                    Console.WriteLine("Invalid input. Please try again.");
+                    Console.CursorTop -= 2;
+                }
+                Console.Write(message.Trim(' ') + ' ');
+                userInput = Console.ReadLine();
+                int.TryParse(userInput, out intValue);
+                inRange = intValue > lowerLimt && intValue < upperLimt;
+                numberOfAttempts++;
+            }
+            while (!int.TryParse(userInput, out intValue) || !inRange);
+
+            return intValue;
+        }
+
+        /// <summary>
         /// This continually prompts the user until they enter a valid double.
         /// </summary>
         /// <param name="message">A console message to prompt the user for an input.</param>

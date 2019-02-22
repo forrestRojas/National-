@@ -12,6 +12,6 @@ namespace Capstone.DAL
         /// </summary>
         /// <returns></returns>
         IList<Campground> GetCampgrounds(int id);
-        decimal GetCampingCost(Campground campground, DateTime arrivalDate, DateTime departureDate);
+        decimal GetCampingCost(decimal dailyFee, DateTime arrivalDate, DateTime departureDate);
     }
 }

@@ -42,41 +42,31 @@ namespace Capstone.CLIs
 
             while (true)
             {
-                int userInput = GetInteger("Pick One:");
+                int userInput = GetInteger("Pick One:", 0, campgrounds.Count);
 
-                if(userInput == 1)
+                if (userInput == 1)
                 {
                     CampgroundMenuHeader(campgrounds);
-                    int selectedCampground;
-                    while (true)
-                    {
-                        selectedCampground = GetInteger("Which campground (enter 0 to cancel)?");
-                        if (selectedCampground == 0)
-                        {
-                            break;
-                        }
-                        else if ((selectedCampground < 0 && selectedCampground >= campgrounds.Count))
-                        {
-                            InvalidInput();
-                        }
 
-                    }
+                    int selectedCampground = GetInteger("Which campground (enter 0 to cancel)?", -1, campgrounds.Count);
                     if (selectedCampground == 0)
                     {
-                        break;
+                        break;                           
                     }
 
                     DateTime arrivalDate = GetDate("What is the arrival date (mm/dd/yyyy)?");
                     DateTime departureDate = GetDate("What is the departure date (mm/dd/yyyy)?");
-                    IList<Site> sites = siteDAO.GetSites(selectedCampground, arrivalDate, departureDate);
+                    Console.WriteLine();
 
+                    IList<Site> sites = siteDAO.GetSites(campgrounds[selectedCampground - 1].Id, arrivalDate, departureDate);
 
-                    // TODO print campsites
-                    //int count = 1;
+                    const int sitePad = 15;
+
+                    Console.WriteLine("Site No.".PadRight(sitePad) + "Max Occup.".PadRight(sitePad) + "Accessible?".PadRight(sitePad) + "Max RV Length".PadRight(sitePad) + "Utilty".PadRight(sitePad) + "Cost");
                     foreach (Site site in sites)
                     {
-                        decimal cost = campgroundDAO.GetCampingCost(campgrounds[selectedCampground - 1], arrivalDate, departureDate);
-                        Console.Write($"{site.SiteNumber, -5}{site.MaxOccupancy, -5}{site.Accessible, -5}{site.MaxRVLength, -5}{site.Utilities, -5}{cost:C2}");
+                        decimal cost = campgroundDAO.GetCampingCost(campgrounds[selectedCampground - 1].DailyFee, arrivalDate, departureDate);
+                        Console.WriteLine($"{site.SiteNumber, -sitePad}{site.MaxOccupancy, -sitePad}{site.Accessible, -sitePad}{site.MaxRVLength, -sitePad}{site.Utilities, -sitePad}{cost:C2}");
                     }
 
                     Console.WriteLine();
