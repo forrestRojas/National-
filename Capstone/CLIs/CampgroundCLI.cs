@@ -71,7 +71,9 @@ namespace Capstone.CLIs
                     int siteNumber = GetInteger("Which site should be reserved (enter 0 to cancel)?");
                     string reservationName = GetString("What name should the reservation be made under?");
                     // TODO build reservationbooking
-                    reservationDAO.MakeResrevation(siteNumber, reservationName, arrivalDate, departureDate);
+                    int reservationId = reservationDAO.MakeResrevation(sites[siteNumber - 1 ].SiteId, reservationName, arrivalDate, departureDate);
+
+                    Console.WriteLine($"The reservation has been made and the confirmation id is {reservationId}");
                 }
                 else if (userInput == 2)
                 {

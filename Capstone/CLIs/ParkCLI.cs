@@ -18,7 +18,7 @@ namespace Capstone.CLIs
 
         public ParkCLI(Park selectedPark, ICampgroundDAO campgroundDAO, ISiteDAO siteDAO, IReservationDAO reservationDAO)
         {
-            
+
             this.park = selectedPark;
             this.campgroundDAO = campgroundDAO;
             this.siteDAO = siteDAO;
