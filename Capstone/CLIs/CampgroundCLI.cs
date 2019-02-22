@@ -70,6 +70,7 @@ namespace Capstone.CLIs
                     Console.WriteLine();
                     int siteNumber = GetInteger("Which site should be reserved (enter 0 to cancel)?");
                     string reservationName = GetString("What name should the reservation be made under?");
+                    reservationDAO.GetReservations(sites[siteNumber - 1].SiteId);
                     // TODO build reservationbooking
                     int reservationId = reservationDAO.MakeResrevation(sites[siteNumber - 1 ].SiteId, reservationName, arrivalDate, departureDate);
 

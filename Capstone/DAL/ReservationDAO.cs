@@ -23,6 +23,50 @@ namespace Capstone.DAL
             this.connectionString = connectionString;
         }
 
+        public IList<Reservation> GetReservations(int siteid)
+        {
+            List<Reservation> res = new List<Reservation>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM reservation WHERE site_id = @siteid ORDER BY from_date");
+                    cmd.Parameters.AddWithValue("@siteid", siteid);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Reservation reservation = ConvertReaderToRes(reader);
+                        res.Add(reservation);
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error retrieving reservation information.");
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+            return res;
+        }
+
+        private Reservation ConvertReaderToRes(SqlDataReader reader)
+        {
+            Reservation res = new Reservation();
+
+            res.Id = Convert.ToInt32(reader["reservation_id"]);
+            res.SiteId = Convert.ToInt32(reader["site_id"]);
+            res.Name = Convert.ToString(reader["name"]);
+            res.FromDate = Convert.ToDateTime(reader["from_date"]);
+            res.ToDate = Convert.ToDateTime(reader["to_date"]);
+            res.CreateDate = Convert.ToDateTime(reader["create_date"]);
+        }
+
         /// <summary>
         /// 
         /// </summary>
