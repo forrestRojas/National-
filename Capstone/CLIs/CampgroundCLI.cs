@@ -9,7 +9,7 @@ namespace Capstone.CLIs
 {
     public class CampgroundCLI : CLI
     {
-        //private int selectedPark;
+        const int sitePad = 15;
 
         private ICampgroundDAO campgroundDAO;
         private ISiteDAO siteDAO;
@@ -59,8 +59,6 @@ namespace Capstone.CLIs
                     Console.WriteLine();
 
                     IList<Site> sites = siteDAO.GetSites(campgrounds[selectedCampground - 1].Id, arrivalDate, departureDate);
-
-                    const int sitePad = 15;
 
                     Console.WriteLine("Site No.".PadRight(sitePad) + "Max Occup.".PadRight(sitePad) + "Accessible?".PadRight(sitePad) + "Max RV Length".PadRight(sitePad) + "Utilty".PadRight(sitePad) + "Cost");
                     foreach (Site site in sites)
