@@ -36,7 +36,7 @@ namespace Capstone.DAL
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(this.connectionString))
                 {
                     conn.Open();
 
@@ -47,7 +47,7 @@ namespace Capstone.DAL
 
                     while (reader.Read())
                     {
-                        Reservation reservation = ConvertReaderToRes(reader);
+                        Reservation reservation = this.ConvertReaderToRes(reader);
                         res.Add(reservation);
                     }
                 }
@@ -82,7 +82,7 @@ namespace Capstone.DAL
         }
 
         /// <summary>
-        ///  Books a reservation
+        /// Books a reservation
         /// </summary>
         /// <param name="siteNumber"></param>
         /// <param name="reservationName"></param>
@@ -92,7 +92,7 @@ namespace Capstone.DAL
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(this.connectionString))
                 {
                     conn.Open();
 
