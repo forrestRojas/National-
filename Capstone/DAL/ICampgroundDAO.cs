@@ -6,24 +6,24 @@ using System.Text;
 namespace Capstone.DAL
 {
     /// <summary>
-    /// Represents an ICampgroundDAO Interface
+    /// Represents an <see cref="ICampgroundDAO"/> Interface.
     /// </summary>
     public interface ICampgroundDAO
     {
         /// <summary>
-        /// Gets all campgrounds from a specified park.
+        /// Returns all the campgrounds from a specified <see cref="Park"/>.
         /// </summary>
-        /// <param name="parkId">the park id that the list of campgrounds relate to.</param>
-        /// <returns>An IList of campgrounds pretaining to the parkId</returns>
+        /// <param name="parkId">the <see cref="Park.Id"/> that the list of campgrounds relate to.</param>
+        /// <returns>An <see cref="IList{T}"/> of campgrounds pretaining to the <paramref name="parkId"/>.</returns>
         IList<Campground> GetCampgrounds(int parkId);
 
         /// <summary>
-        /// Gets the camping cost based on the total days spent there.
+        /// Returns the camping cost based on the total days spent there.
         /// </summary>
-        /// <param name="dailyFee">The campground's daily fee.</param>
-        /// <param name="arrivalDate">The arrival date of the revservation.</param>
-        /// <param name="departureDate">The departure date of the revservation.</param>
-        /// <returns>The cost of camping</returns>
+        /// <param name="dailyFee">The <see cref="Campground.DailyFee"/>.</param>
+        /// <param name="arrivalDate">The <see cref="Reservation.FromDate"/>.</param>
+        /// <param name="departureDate">The <see cref="Reservation.ToDate"/>.</param>
+        /// <returns>The cost of camping.</returns>
         decimal GetCampingCost(decimal dailyFee, DateTime arrivalDate, DateTime departureDate);
     }
 }

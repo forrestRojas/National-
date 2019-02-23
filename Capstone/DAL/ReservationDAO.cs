@@ -19,10 +19,10 @@ namespace Capstone.DAL
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="connectionString"></param>
-        public ReservationDAO(string connectionString)
+        /// <param name="databaseConnectionString"></param>
+        public ReservationDAO(string databaseConnectionString)
         {
-            this.connectionString = connectionString;
+            this.connectionString = databaseConnectionString;
         }
 
         /// <summary>

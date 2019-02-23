@@ -5,7 +5,7 @@ using System.Text;
 namespace Capstone.Models
 {
     /// <summary>
-    /// Represents a <see cref="Reservation"/> class.
+    /// Represents a <see cref="Reservation"/> object.
     /// </summary>
     public class Reservation
     {
@@ -15,7 +15,7 @@ namespace Capstone.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the campsite the <see cref="Reservation"/> is for.
+        /// Gets or sets the <see cref="Site"/> the <see cref="Reservation"/> is for.
         /// </summary>
         public int SiteId { get; set; }
 

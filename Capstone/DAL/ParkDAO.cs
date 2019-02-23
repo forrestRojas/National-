@@ -7,35 +7,35 @@ using Capstone.Models;
 namespace Capstone.DAL
 {
     /// <summary>
-    /// 
+    /// Represents a <see cref="ParkDAO"/> class.
     /// </summary>
-    class ParkDAO : IParkDAO
+    public class ParkDAO : IParkDAO
     {
         /// <summary>
-        /// 
+        /// The SQL connection string.
         /// </summary>
         private readonly string connectionString;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ParkDAO"/> class based on the SQL <paramref name="databaseConnectionString"/>.
         /// </summary>
-        /// <param name="connectionString"></param>
-        public ParkDAO(string connectionString)
+        /// <param name="databaseConnectionString">The SQL Connection string.</param>
+        public ParkDAO(string databaseConnectionString)
         {
-            this.connectionString = connectionString;
+            this.connectionString = databaseConnectionString;
         }
 
         /// <summary>
-        /// Gets the parks
+        /// Returns a collection of <see cref="Park"/> objects.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An <see cref="IList{T}"/> of <see cref="Park"/> objects.</returns>
         public IList<Park> GetParks()
         {
             List<Park> parks = new List<Park>();
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(this.connectionString))
                 {
                     conn.Open();
 

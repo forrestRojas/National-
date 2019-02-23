@@ -5,7 +5,7 @@ using System.Text;
 namespace Capstone.Models
 {
     /// <summary>
-    /// Represents a <see cref="Park"/> class.
+    /// Represents a <see cref="Park"/> object.
     /// </summary>
     public class Park
     {

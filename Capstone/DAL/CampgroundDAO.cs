@@ -12,17 +12,17 @@ namespace Capstone.DAL
     public class CampgroundDAO : ICampgroundDAO
     {
         /// <summary>
-        /// The SQL connection string
+        /// The SQL connection string.
         /// </summary>
         private readonly string connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CampgroundDAO"/> class based on the SQL <paramref name="connectionString"/>.
+        /// Initializes a new instance of the <see cref="CampgroundDAO"/> class based on the SQL <paramref name="databaseConnectionString"/>.
         /// </summary>
-        /// <param name="connectionString">The SQL Connection string</param>
-        public CampgroundDAO(string connectionString)
+        /// <param name="databaseConnectionString">The SQL Connection string.</param>
+        public CampgroundDAO(string databaseConnectionString)
         {
-            this.connectionString = connectionString;
+            this.connectionString = databaseConnectionString;
         }
 
         /// <summary>
