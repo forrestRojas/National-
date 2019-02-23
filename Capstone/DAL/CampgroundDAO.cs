@@ -7,49 +7,47 @@ using Capstone.Models;
 namespace Capstone.DAL
 {
     /// <summary>
-    /// 
+    /// Represents a <see cref="CampgroundDAO"/> class.
     /// </summary>
-    class CampgroundDAO : ICampgroundDAO
+    public class CampgroundDAO : ICampgroundDAO
     {
-        // TODO add documention
-
         /// <summary>
-        /// 
+        /// The SQL connection string
         /// </summary>
         private readonly string connectionString;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="CampgroundDAO"/> class based on the SQL <paramref name="connectionString"/>.
         /// </summary>
-        /// <param name="connectionString"></param>
+        /// <param name="connectionString">The SQL Connection string</param>
         public CampgroundDAO(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
         /// <summary>
-        /// 
+        /// Returns a list of <see cref="Campground"/>s from a SQL database based on the given <paramref name="parkId"/>.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IList<Campground> GetCampgrounds(int id)
+        /// <param name="parkId">the <see cref="Park.Id"/> the list of <see cref="Campground"/>s refer to.</param>
+        /// <returns><see cref="IList{T}"/></returns>
+        public IList<Campground> GetCampgrounds(int parkId)
         {
             List<Campground> campgrounds = new List<Campground>();
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(this.connectionString))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT * FROM campground WHERE park_id = @parkid;", conn);
-                    cmd.Parameters.AddWithValue("@parkid", id);
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM campground WHERE park_id = @parkId;", conn);
+                    cmd.Parameters.AddWithValue("@parkId", parkId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        Campground camp = ConvertReaderToCampground(reader);
+                        Campground camp = this.ConvertReaderToCampground(reader);
                         campgrounds.Add(camp);
                     }
                 }
@@ -65,22 +63,22 @@ namespace Capstone.DAL
         }
 
         /// <summary>
-        /// 
+        /// Returns the camping cost of the total time during the reseveration.
         /// </summary>
-        /// <param name="dailyFee"></param>
-        /// <param name="arrivalDate"></param>
-        /// <param name="departureDate"></param>
-        /// <returns></returns>
+        /// <param name="dailyFee">The <see cref="Campground.DailyFee"/></param>
+        /// <param name="arrivalDate">The <see cref="Campground.OpenFrom"/> date</param>
+        /// <param name="departureDate">The <see cref="Campground.OpenTo"/> date</param>
+        /// <returns>The total cost of the stay</returns>
         public decimal GetCampingCost(decimal dailyFee, DateTime arrivalDate, DateTime departureDate)
         {
             return (decimal)(departureDate - arrivalDate).TotalDays * dailyFee;
         }
 
         /// <summary>
-        /// 
+        /// Converts the SQL data from the <see cref="SqlDataReader"/> into a <see cref="Campground"/> obj.
         /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
+        /// <param name="reader">The <see cref="SqlDataReader"/></param>
+        /// <returns>A new <see cref="Campground"/></returns>
         private Campground ConvertReaderToCampground(SqlDataReader reader)
         {
             Campground campground = new Campground();
