@@ -1,19 +1,19 @@
-﻿using Capstone.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Capstone.Models;
 
 namespace Capstone.DAL
 {
     /// <summary>
-    /// park interface
+    /// Represents an <see cref="IParkDAO"/> interface.
     /// </summary>
     public interface IParkDAO
     {
         /// <summary>
-        /// Gets all parks
+        /// Returns a collection of all the <see cref="Park"/> objects in the database.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An <see cref="IList{T}"/> collection of <see cref="Park"/> objects.</returns>
         IList<Park> GetParks();
     }
 }

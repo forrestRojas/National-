@@ -29,7 +29,7 @@ namespace Capstone.DAL
         /// Returns a list of <see cref="Campground"/>s from a SQL database based on the given <paramref name="parkId"/>.
         /// </summary>
         /// <param name="parkId">the <see cref="Park.Id"/> the list of <see cref="Campground"/>s refer to.</param>
-        /// <returns><see cref="IList{T}"/></returns>
+        /// <returns><see cref="IList{T}"/> of campgrounds.</returns>
         public IList<Campground> GetCampgrounds(int parkId)
         {
             List<Campground> campgrounds = new List<Campground>();
@@ -63,22 +63,22 @@ namespace Capstone.DAL
         }
 
         /// <summary>
-        /// Returns the camping cost of the total time during the reseveration.
+        /// Returns the camping cost of the total time during the <see cref="Reservation"/>.
         /// </summary>
-        /// <param name="dailyFee">The <see cref="Campground.DailyFee"/></param>
-        /// <param name="arrivalDate">The <see cref="Campground.OpenFrom"/> date</param>
-        /// <param name="departureDate">The <see cref="Campground.OpenTo"/> date</param>
-        /// <returns>The total cost of the stay</returns>
+        /// <param name="dailyFee">The <see cref="Campground.DailyFee"/>.</param>
+        /// <param name="arrivalDate">The <see cref="Campground.OpenFrom"/> date.</param>
+        /// <param name="departureDate">The <see cref="Campground.OpenTo"/> date.</param>
+        /// <returns>The total cost of the stay.</returns>
         public decimal GetCampingCost(decimal dailyFee, DateTime arrivalDate, DateTime departureDate)
         {
             return (decimal)(departureDate - arrivalDate).TotalDays * dailyFee;
         }
 
         /// <summary>
-        /// Converts the SQL data from the <see cref="SqlDataReader"/> into a <see cref="Campground"/> obj.
+        /// Converts the Campground Table data from the <see cref="SqlDataReader"/> into a <see cref="Campground"/> object.
         /// </summary>
-        /// <param name="reader">The <see cref="SqlDataReader"/></param>
-        /// <returns>A new <see cref="Campground"/></returns>
+        /// <param name="reader">The <see cref="SqlDataReader"/>.</param>
+        /// <returns>A new <see cref="Campground"/>.</returns>
         private Campground ConvertReaderToCampground(SqlDataReader reader)
         {
             Campground campground = new Campground();

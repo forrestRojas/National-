@@ -26,7 +26,7 @@ namespace Capstone.DAL
         }
 
         /// <summary>
-        /// Returns a collection of <see cref="Park"/> objects.
+        /// Returns a collection of all the <see cref="Park"/> objects in the database.
         /// </summary>
         /// <returns>An <see cref="IList{T}"/> of <see cref="Park"/> objects.</returns>
         public IList<Park> GetParks()
@@ -45,7 +45,7 @@ namespace Capstone.DAL
 
                     while (reader.Read())
                     {
-                        Park park = ConvertReaderToPark(reader);
+                        Park park = this.ConvertReaderToPark(reader);
                         parks.Add(park);
                     }
                 }
@@ -61,10 +61,10 @@ namespace Capstone.DAL
         }
 
         /// <summary>
-        /// 
+        /// Converts the Park Table data from the <see cref="SqlDataReader"/> into a <see cref="Park"/> object.
         /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
+        /// <param name="reader">The <see cref="SqlDataReader"/>.</param>
+        /// <returns>A new <see cref="Park"/>.</returns>
         private Park ConvertReaderToPark(SqlDataReader reader)
         {
             Park park = new Park();
